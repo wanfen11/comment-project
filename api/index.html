@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh‑CN">
+<head>
+  <meta charset="UTF‑8">
+  <meta name="viewport" content="width=device‑width, initial‑scale=1.0">
+  <title>随机好评</title>
+  <style>
+    *{margin:0;padding:0;box‑sizing:border‑box}
+    body{background:#f7f7f7;font‑family:system‑ui;padding:40px 20px}
+    .box{max‑width:600px;margin:0 auto;background:#fff;padding:32px;border‑radius:12px;box‑shadow:0 2px 12px #00000014}
+    h2{text‑align:center;margin‑bottom:24px;color:#222}
+    #textOut{padding:20px 16px;background:#f4f6f8;border‑radius:8px;font‑size:17px;line‑height:1.7;margin‑bottom:20px;min‑height:100px}
+    button{width:100%;padding:14px;font‑size:16px;border:none;background:#2563eb;color:#fff;border‑radius:8px}
+  </style>
+</head>
+<body>
+<div class="box">
+  <h2>复制好评文案</h2>
+  <div id="textOut">加载中...</div>
+  <button id="copyBtn">点击复制文案</button>
+</div>
+
+<script>
+async function loadText(){
+  try{
+    const resp=await fetch("/api/getComment");
+    const json=await resp.json();
+    document.querySelector("#textOut").innerText=json.content;
+  }catch(e){
+    document.querySelector("#textOut").innerText="网络出错，请刷新页面";
+  }
+}
+loadText();
+document.querySelector("#copyBtn").onclick=async ()=>{
+  const t=document.querySelector("#textOut").innerText;
+  await navigator.clipboard.writeText(t);
+  alert("已复制到剪贴板！");
+}
+</script>
+</body>
+</html>
