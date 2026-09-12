@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/getComment.js": {
+      "runtime": "@vercel/node"
+    }
+  }
+}
